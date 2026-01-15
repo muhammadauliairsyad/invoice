@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Invoice Generator</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>Invoice Generator</h1>
+      <p>Isi kolom berikut untuk membuat invoice otomatis atau impor dari CSV.</p>
+    </header>
+
+    <section class="editor">
+      <form id="invoiceForm">
+        <div class="form-grid">
+          <div class="form-card">
+            <h2>Data Perusahaan</h2>
+            <label>Nama Perusahaan
+              <input data-section="company" data-key="company_name" type="text" value="PT Angkasa Utama" />
+            </label>
+            <label>Alamat
+              <input data-section="company" data-key="company_address" type="text" value="Jl. Merdeka No. 10, Jakarta" />
+            </label>
+            <label>Telepon
+              <input data-section="company" data-key="company_phone" type="text" value="+62 21 555 0101" />
+            </label>
+            <label>Email
+              <input data-section="company" data-key="company_email" type="email" value="invoice@angkasa.co.id" />
+            </label>
+            <label>NPWP
+              <input data-section="company" data-key="company_npwp" type="text" value="01.234.567.8-999.000" />
+            </label>
+          </div>
+
+          <div class="form-card">
+            <h2>Data Customer</h2>
+            <label>Nama Customer
+              <input data-section="customer" data-key="customer_name" type="text" value="PT Pelanggan Jaya" />
+            </label>
+            <label>Alamat Customer
+              <input data-section="customer" data-key="customer_address" type="text" value="Jl. Pelanggan No. 20, Bandung" />
+            </label>
+            <label>NPWP Customer
+              <input data-section="customer" data-key="npwp_customer" type="text" value="02.333.444.5-777.000" />
+            </label>
+            <label>Cabang
+              <input data-section="meta" data-key="cabang" type="text" value="CGK" />
+            </label>
+          </div>
+
+          <div class="form-card">
+            <h2>Header Invoice</h2>
+            <label>Tanggal Kwitansi
+              <input data-section="header" data-key="tgl_kwitansi" type="date" value="2024-07-12" />
+            </label>
+            <label>No Kwitansi
+              <input data-section="header" data-key="no_kwitansi" type="text" value="INV-2024-0001" />
+            </label>
+            <label>No Faktur Pajak
+              <input data-section="header" data-key="no_faktur_pajak" type="text" value="010.000-24.00000123" />
+            </label>
+            <label>Status
+              <select data-section="header" data-key="status">
+                <option value="LUNAS" selected>LUNAS</option>
+                <option value="KURANG BAYAR">KURANG BAYAR</option>
+                <option value="LEBIH BAYAR">LEBIH BAYAR</option>
+                <option value="DEPOSIT">DEPOSIT</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="form-card">
+            <h2>Ringkasan Tagihan</h2>
+            <label>DPP
+              <input data-section="header" data-key="dpp" type="text" value="Rp 10.000.000" />
+            </label>
+            <label>PPN
+              <input data-section="header" data-key="ppn" type="text" value="Rp 1.100.000" />
+            </label>
+            <label>PPh23
+              <input data-section="header" data-key="pph23" type="text" value="Rp 200.000" />
+            </label>
+            <label>Total Tagihan
+              <input data-section="header" data-key="nilai_tagihan" type="text" value="Rp 10.900.000" />
+            </label>
+            <label>Nilai Pembayaran
+              <input data-section="header" data-key="nilai_pembayaran" type="text" value="Rp 10.900.000" />
+            </label>
+          </div>
+
+          <div class="form-card">
+            <h2>Pembayaran</h2>
+            <label>Potong PPh23 Sendiri
+              <select data-section="header" data-key="potong_pph23_sendiri">
+                <option value="IYA">IYA</option>
+                <option value="TIDAK" selected>TIDAK</option>
+              </select>
+            </label>
+            <label>Tanggal Bayar
+              <input data-section="header" data-key="tanggal_bayar" type="date" value="2024-07-20" />
+            </label>
+            <label>Selisih
+              <input data-section="header" data-key="selisih" type="text" value="Rp 0" />
+            </label>
+            <label>Monitoring
+              <select data-section="header" data-key="monitoring">
+                <option value="SELESAI" selected>SELESAI</option>
+                <option value="DI TAGIH">DI TAGIH</option>
+                <option value="DEPOSIT">DEPOSIT</option>
+              </select>
+            </label>
+            <label>Lama Pembayaran (hari)
+              <input data-section="header" data-key="lama_pembayaran_hari" type="number" value="8" />
+            </label>
+          </div>
+
+          <div class="form-card">
+            <h2>Catatan & Tanda Tangan</h2>
+            <label>Catatan
+              <textarea data-section="footer" data-key="catatan" rows="3">Mohon lakukan pembayaran sesuai jadwal.</textarea>
+            </label>
+            <label>Penandatangan
+              <input data-section="footer" data-key="signatory" type="text" value="Finance Manager" />
+            </label>
+          </div>
+        </div>
+
+        <div class="items-section">
+          <div class="items-header">
+            <div>
+              <h2>Detail Penerbangan</h2>
+              <p class="muted">Bisa input manual atau impor CSV (kolom pertama berisi header).</p>
+            </div>
+            <div class="items-actions">
+              <button type="button" id="addItem">Tambah Baris</button>
+            </div>
+          </div>
+
+          <div class="import-grid">
+            <div>
+              <label class="file-label">Impor CSV Header (tabel hijau)
+                <input type="file" id="headerCsv" accept=".csv" />
+              </label>
+            </div>
+            <div>
+              <label class="file-label">Impor CSV Detail Penerbangan (tabel biru)
+                <input type="file" id="itemsCsv" accept=".csv" />
+              </label>
+            </div>
+            <div>
+              <label>Urutkan Berdasarkan
+                <select id="sortField">
+                  <option value="tgl_dep" selected>Tgl DEP</option>
+                  <option value="tgl_arr">Tgl ARR</option>
+                  <option value="ata_utc">ATA UTC</option>
+                  <option value="atd_utc">ATD UTC</option>
+                  <option value="oh_utc">OH UTC</option>
+                </select>
+              </label>
+            </div>
+            <div>
+              <label>Urutan
+                <select id="sortDirection">
+                  <option value="asc" selected>Awal → Akhir</option>
+                  <option value="desc">Akhir → Awal</option>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Airline</th>
+                  <th>Jenis</th>
+                  <th>Flight</th>
+                  <th>Registrasi</th>
+                  <th>Aircraft</th>
+                  <th>DEP</th>
+                  <th>ARR</th>
+                  <th>Tgl DEP</th>
+                  <th>Tgl ARR</th>
+                  <th>ATA UTC</th>
+                  <th>ATD UTC</th>
+                  <th>OH UTC</th>
+                  <th>Advance/Extend</th>
+                  <th>PIC Dinas</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="itemsBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button type="button" id="preview">Preview HTML</button>
+          <button type="button" id="download">Download PDF</button>
+        </div>
+        <p id="message" class="message"></p>
+      </form>
+    </section>
+
+    <section class="preview">
+      <h2>Preview</h2>
+      <iframe id="previewFrame" title="Preview Invoice"></iframe>
+    </section>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
