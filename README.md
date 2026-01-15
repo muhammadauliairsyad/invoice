@@ -40,6 +40,8 @@ Aplikasi akan berjalan di `http://localhost:3000`.
 
 ## Endpoint API
 
+## Endpoint
+
 ### POST `/api/invoices/render`
 Mengembalikan HTML hasil render invoice.
 
@@ -47,6 +49,8 @@ Mengembalikan HTML hasil render invoice.
 Mengembalikan file PDF (A4) untuk diunduh.
 
 ## Contoh Payload JSON (API)
+
+## Contoh Payload JSON
 
 ```json
 {
