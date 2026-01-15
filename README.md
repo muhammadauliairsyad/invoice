@@ -24,6 +24,22 @@ npm start
 
 Aplikasi akan berjalan di `http://localhost:3000`.
 
+## Cara Pakai (UI)
+
+1. Buka `http://localhost:3000`.
+2. Isi kolom-kolom form (data perusahaan, customer, header, pembayaran).
+3. Tambahkan baris detail penerbangan sesuai kebutuhan atau impor CSV.
+4. Pilih urutan data (Tgl DEP/Tgl ARR/dll) jika perlu.
+5. Klik **Preview HTML** untuk melihat invoice atau **Download PDF** untuk mengunduh.
+
+### Format CSV
+
+**CSV Header (tabel hijau)**: gunakan kolom sesuai nama field header, contoh: `tgl_kwitansi,no_kwitansi,dpp,ppn,pph23,nilai_tagihan,no_faktur_pajak,nilai_pembayaran,potong_pph23_sendiri,tanggal_bayar,status,selisih,monitoring,lama_pembayaran_hari`.
+
+**CSV Detail Penerbangan (tabel biru)**: gunakan kolom sesuai field item, contoh: `no,airline,jenis_penerbangan,flight_number,registrasi,aircraft_type,dep,arr,tgl_dep,tgl_arr,ata_utc,atd_utc,oh_utc,advance_extend,pic_dinas`.
+
+## Endpoint API
+
 ## Endpoint
 
 ### POST `/api/invoices/render`
@@ -31,6 +47,8 @@ Mengembalikan HTML hasil render invoice.
 
 ### POST `/api/invoices/pdf`
 Mengembalikan file PDF (A4) untuk diunduh.
+
+## Contoh Payload JSON (API)
 
 ## Contoh Payload JSON
 
