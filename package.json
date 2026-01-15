@@ -1,0 +1,14 @@
+{
+  "name": "invoice-generator",
+  "version": "1.0.0",
+  "description": "Simple invoice generator with Express, Handlebars, and Puppeteer",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "handlebars": "^4.7.8",
+    "puppeteer": "^22.10.0"
+  }
+}

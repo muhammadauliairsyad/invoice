@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Invoice Generator</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>Invoice Generator</h1>
+      <p>Tempel JSON payload dan generate invoice HTML atau PDF.</p>
+    </header>
+
+    <section class="editor">
+      <label for="payload">Payload JSON</label>
+      <textarea id="payload" spellcheck="false"></textarea>
+      <div class="actions">
+        <button id="preview">Preview HTML</button>
+        <button id="download">Download PDF</button>
+      </div>
+      <p id="message" class="message"></p>
+    </section>
+
+    <section class="preview">
+      <h2>Preview</h2>
+      <iframe id="previewFrame" title="Preview Invoice"></iframe>
+    </section>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
